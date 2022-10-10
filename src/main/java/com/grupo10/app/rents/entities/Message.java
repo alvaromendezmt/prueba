@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.grupo10.app.rents.entities;
 
+package com.grupo10.app.rents.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.grupo10.app.rents.entities.Quadbike;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,14 +38,18 @@ public class Message implements Serializable {
     private Integer idMessage;
     @Column
     private String messageText;
-    @Column
+    
+    @ManyToOne
+    @JoinColumn(name="quadbikeId")
+    @JsonIgnoreProperties({"messages","reservations"})
     private Quadbike quadbike;
     
     //@ManyToOne(cascade = CascadeType.ALL)
     //@JsonIgnoreProperties("messages")
     //@JoinColumn(name="message_id")
-    @Column
-    private Client client;  
     
-    
+    @ManyToOne
+    @JoinColumn(name="clientId")
+    @JsonIgnoreProperties({"messages","reservations"})
+    private Client client;   
 }

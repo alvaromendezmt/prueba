@@ -4,13 +4,20 @@
  */
 package com.grupo10.app.rents.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,19 +40,33 @@ public class Reservation implements Serializable {
     @Column(name="id")    
     private Integer idReservation;
     @Column
-    private Date startDate;
+    private Timestamp startDate;
     @Column
-    private Date devolutionDate;    
+    private Timestamp devolutionDate;    
     @Column
-    private String status;
-    @Column
-    private Quadbike quadbike;  
+    private String status ="created";
+    //no tocar quadbike
+  @ManyToOne
+    @JoinColumn(name="quadbikeId")
+    @JsonIgnoreProperties({"quadbike","reservations"})
+    private Quadbike quadbike;
     
-    @Column
+    //@ManyToOne(cascade = CascadeType.ALL)
+   // @JsonIgnoreProperties("reservation")
+    //@JoinColumn(name="reservation_id")
+  
+
+   
+  // @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "quadbike")
+    //@JsonIgnoreProperties({"quadbike","client"})
+    //private List<Message> messages;
+   
+     @ManyToOne
+    @JoinColumn(name="clientId")
+    @JsonIgnoreProperties({"messages","reservations"})
     private Client client;  
     
     @Column
     private String score;  
-    
     
 }

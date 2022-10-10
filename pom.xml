@@ -11,7 +11,7 @@
 	<groupId>com.grupo10</groupId>
 	<artifactId>app-rents</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>app-rents profesor</name>
+	<name>app-rents_reto3</name>
 	<description>Project to handle web api of rents</description>
 	<properties>
 		<java.version>11</java.version>

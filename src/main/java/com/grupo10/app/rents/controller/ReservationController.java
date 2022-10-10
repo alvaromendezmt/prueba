@@ -35,6 +35,6 @@ public class ReservationController {
   public String create(@RequestBody Reservation request) {
     repository.save(request);
 
-    return "crated....";
+    return "created";
   }
 }

@@ -4,7 +4,9 @@
  */
 package com.grupo10.app.rents.controller;
 
-import com.grupo10.app.rents.entities.Quadbike;
+import com.grupo10.app.rents.entities.Message;
+import com.grupo10.app.rents.interfaces.IMessageRepository;
+
 import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
     
     @Autowired
-    IQuadbikeRepository repository;
+    IMessageRepository repository;
     
     @GetMapping("/all")
-    public Iterable<Quadbike> getQuadbikes(){
-        Iterable<Quadbike> response = repository.findAll();
+    public Iterable<Message> get(){
+        Iterable<Message> response = repository.findAll();
         
         return response;
     }
     
     @PostMapping("/save")
-    public String createQuadbike(@RequestBody Quadbike request){
+    public String create(@RequestBody Message request){
         
         repository.save(request);
         
