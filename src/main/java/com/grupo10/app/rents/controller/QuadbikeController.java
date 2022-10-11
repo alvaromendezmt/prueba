@@ -5,6 +5,7 @@
 package com.grupo10.app.rents.controller;
 
 import com.grupo10.app.rents.entities.Quadbike;
+import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.grupo10.app.rents.service.QuadbikeService;
+import java.util.List;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
@@ -24,10 +29,13 @@ import org.springframework.web.bind.annotation.PutMapping;
  */
 @RestController
 @RequestMapping("/api/Quadbike")
+@CrossOrigin(origins = "*")
 public class QuadbikeController {
 
-    @Autowired
+     @Autowired
     QuadbikeService service;
+     @Autowired
+    IQuadbikeRepository repository;
 
     @GetMapping("/all")
     public Iterable<Quadbike> get() {
@@ -38,20 +46,28 @@ public class QuadbikeController {
     public Optional<Quadbike> get(@PathVariable("id") Integer id) {
         return service.get(id);
     }
+    
+//    @GetMapping("/reports")
+//    public List<Object[]> getReport() {
+//        return service.getReport();
+//    }
 
     @PostMapping("/save")
-    public String create(@RequestBody Quadbike request) {
-        return service.create(request);
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody Quadbike request) {
+        service.create(request);
     }
     
     @PutMapping("/update")
-    public Quadbike update(@RequestBody Quadbike request) {
-        return service.update(request);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void update(@RequestBody Quadbike request) {
+        service.update(request);
     }
     
     @DeleteMapping("/{id}")
-    public Boolean delete(@PathVariable("id") Integer id) {
-        return service.delete(id);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void delete(@PathVariable("id") Integer id) {
+        service.delete(id);
     }
 
 }

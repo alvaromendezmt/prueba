@@ -4,10 +4,13 @@
  */
 package com.grupo10.app.rents.service;
 
-import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
+import com.grupo10.app.rents.interfaces.IReservationRepository;
 import com.grupo10.app.rents.entities.Category;
 import com.grupo10.app.rents.interfaces.ICategoryRepository;
 import com.grupo10.app.rents.entities.Quadbike;
+import com.grupo10.app.rents.entities.Reservation;
+import com.grupo10.app.rents.interfaces.IReservationRepository;
+import com.grupo10.app.rents.repository.ReservationRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,28 +23,31 @@ import org.springframework.stereotype.Service;
 public class ReservationService {
 
     @Autowired
-    IQuadbikeRepository repository;
+    IReservationRepository repository;
 
     @Autowired
-    ICategoryRepository categoryRepository; 
+    ReservationRepository reservationRepository; 
 
-    public Iterable<Quadbike> get() {
-        Iterable<Quadbike> response = repository.findAll();
+    public Iterable<Reservation> get() {
+        Iterable<Reservation> response = repository.findAll();
         return response;
     }
 
-    public String create(Quadbike request) {
+    public Reservation create(Reservation request) {
 
-        Optional<Category> cat = categoryRepository.findById(request.getCategory().getId());
-        if (!cat.isEmpty()) {
-            request.setCategory(cat.get());
-        }
-        if (request.getName() != null) {
-            repository.save(request);
-            return "created....";
-        } else {
-            return "falta el nombre";
-        }
+        //Optional<Reservation> cat = reservationRepository.findById(request.getReservation().getId());
+//        if (!cat.isEmpty()) {
+//            request.setReservation(cat.get());
+//        }
+//        if (request.getName() != null) {
+//            repository.save(request);
+//            return "created....";
+//        } else {
+//            return "falta el nombre";
+//        }
 
+    
+        //Optional<Category> cat = categoryRepository.findById(request.getCategory().getId());
+            return repository.save(request);
+            }
     }
-}

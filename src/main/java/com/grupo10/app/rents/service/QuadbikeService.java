@@ -8,6 +8,8 @@ import com.grupo10.app.rents.interfaces.IQuadbikeRepository;
 import com.grupo10.app.rents.entities.Category;
 import com.grupo10.app.rents.interfaces.ICategoryRepository;
 import com.grupo10.app.rents.entities.Quadbike;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +37,7 @@ public class QuadbikeService {
         return response;
     }
 
-    public String create(Quadbike request) {
+   public String create(Quadbike request) {
 
         Optional<Category> cat = categoryRepository.findById(request.getCategory().getId());
         if (!cat.isEmpty()) {
@@ -52,8 +54,13 @@ public class QuadbikeService {
     
     public Quadbike update(Quadbike quadbike) {
         Quadbike quadbikeToUpdate=new Quadbike();
+        
         if(repository.existsById(quadbike.getId())){
+            Optional<Quadbike> currentQuadbike = repository.findById(quadbike.getId());
             quadbikeToUpdate = quadbike;
+            quadbikeToUpdate.setCategory(currentQuadbike.get().getCategory());
+            quadbikeToUpdate.setMessages(currentQuadbike.get().getMessages());
+            quadbikeToUpdate.setReservations(currentQuadbike.get().getReservations());
             repository.save(quadbikeToUpdate);
         }        
         return quadbikeToUpdate;
@@ -64,4 +71,10 @@ public class QuadbikeService {
         Boolean deleted = true;
         return deleted;
     }
+
+    public List<Object[]> getReport() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+  
 }

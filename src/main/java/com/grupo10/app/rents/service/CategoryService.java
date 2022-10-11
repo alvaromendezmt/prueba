@@ -19,23 +19,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryService {
 
-    @Autowired
-    IQuadbikeRepository repository;
+     @Autowired
+    ICategoryRepository repository;
 
-    @Autowired
-    ICategoryRepository categoryRepository; 
 
-    public Iterable<Quadbike> get() {
-        Iterable<Quadbike> response = repository.findAll();
+    public Iterable<Category> get() {
+        Iterable<Category> response = repository.findAll();
         return response;
     }
 
-    public String create(Quadbike request) {
-
-        Optional<Category> cat = categoryRepository.findById(request.getCategory().getId());
-        if (!cat.isEmpty()) {
-            request.setCategory(cat.get());
-        }
+    public String create(Category request) {       
+        
         if (request.getName() != null) {
             repository.save(request);
             return "created....";
@@ -43,5 +37,20 @@ public class CategoryService {
             return "falta el nombre";
         }
 
+    }
+    
+    public Category update(Category category) {
+        Category categoryToUpdate=new Category();
+        if(repository.existsById(category.getId())){
+            categoryToUpdate = category;
+            repository.save(categoryToUpdate);
+        }        
+        return categoryToUpdate;
+    }
+    
+    public Boolean delete(Integer id) {
+        repository.deleteById(id);
+        Boolean deleted = true;
+        return deleted;
     }
 }
