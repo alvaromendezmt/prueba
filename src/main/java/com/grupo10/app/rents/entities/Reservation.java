@@ -67,6 +67,6 @@ public class Reservation implements Serializable {
     private Client client;  
     
     @Column
-    private String score = "None";  
-    
-}
+    private String score ;  
+   
+    }
